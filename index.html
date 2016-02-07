@@ -1,11 +1,13 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet" type="text/css">
 <style>
   * {
     font-family: 'Shadows Into Light', cursive;
-    font-weight: bold;
+    /*font-weight: bold;*/
     font-size: 40px;
     padding: 0.25em;
   }
@@ -34,12 +36,16 @@
     font-size: 2em;
   }
 
+  @media(max-width: 414px) {
+    input { font-size: 0.7em; }
+  }
+
   input:focus {
     outline: none;
   }
 
   div.footer p {
-    font-size: 0.6em;
+    font-size: 0.8em;
   }
 
   div.footer h1 {
