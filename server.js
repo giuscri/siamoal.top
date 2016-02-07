@@ -1795,6 +1795,7 @@ app.get('/', function (req, res) {
     return _res.send({
         timestamp: episode_tmstmps[inx],
         src: [url, 't=30:50'].join('#'),
+        debug: true,
     });
 
     /*
