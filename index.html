@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="fav.ico" />
 <style>
   * {
     font-family: 'Shadows Into Light', cursive;
@@ -24,9 +25,9 @@
     font-size: 0.5em;
   }
 
-  div.main div.ttle {
+  div.main div.ttle * {
     font-size: 1.5em;
-    min-height: 3em;
+    /*min-height: 3em;*/
   }
 
   input {
@@ -36,8 +37,20 @@
     font-size: 2em;
   }
 
-  @media(max-width: 700px) {
+  @media screen and (max-width: 700px) {
     input { font-size: 1.2em; }
+  }
+
+  @media screen and (max-width: 552px) {
+    div.main div.ttle span { font-size: 0.8em; }
+  }
+
+  @media screen and (max-width: 442px) {
+    input { font-size: 0.8em; }
+  }
+
+  @media screen and (max-width: 342px) {
+    div.main div.ttle span { font-size: 0.5em; }
   }
 
   input:focus {
@@ -66,9 +79,7 @@
   </div>
 
   <div class="ttle">
-    <div class="dy"></div>
-    <div class="mnth"></div>
-    <div class="yr"></div>
+    <span class="dy"></span>&nbsp;<span class="mnth"></span>&nbsp;<span class="yr"></span>
   </div>
 
   <div><input type="button" class="ply" value="-&gt; Daje &lt;-" /></div>
@@ -97,7 +108,7 @@
       Beh, amiiico mio, strafogati!
     </p>
 
-    <div class="credits">Made with love, 2016</div>
+    <div class="credits">Made with ♥, 2016</div>
   </div>
 </div>
 
@@ -152,11 +163,11 @@ window.addEventListener('load', function() {
 
   set_nxt(function(err, res) {
     var dt = fmt_timestamp(res['timestamp']);
-    document.querySelector('div.ttle div.yr').innerHTML =
+    document.querySelector('div.ttle span.yr').innerHTML =
      dt['yr'];
-    document.querySelector('div.ttle div.mnth').innerHTML =
+    document.querySelector('div.ttle span.mnth').innerHTML =
      dt['mnth'];
-    document.querySelector('div.ttle div.dy').innerHTML =
+    document.querySelector('div.ttle span.dy').innerHTML =
      dt['dy'];
   });
 
@@ -171,18 +182,18 @@ window.addEventListener('load', function() {
     // plyer was playing audio, just restart it
     if (plyer.src) { 
       document.querySelector('input.ply').value =
-       'Momento,\'momento!';
+       'Momento, \'momento!';
       return plyer.play();
     }
 
     // else, find another episode, then fire it!
     set_nxt(function(err, res) {
       var dt = fmt_timestamp(res['timestamp']);
-      document.querySelector('div.ttle div.yr').innerHTML =
+      document.querySelector('div.ttle span.yr').innerHTML =
        dt['yr'];
-      document.querySelector('div.ttle div.mnth').innerHTML =
+      document.querySelector('div.ttle span.mnth').innerHTML =
        dt['mnth'];
-      document.querySelector('div.ttle div.dy').innerHTML =
+      document.querySelector('div.ttle span.dy').innerHTML =
        dt['dy'];
 
       document.querySelector('input.ply').value =
@@ -199,11 +210,11 @@ window.addEventListener('load', function() {
     }
     set_nxt(function(err, res) {
       var dt = fmt_timestamp(res['timestamp']);
-      document.querySelector('div.ttle div.yr').innerHTML =
+      document.querySelector('div.ttle span.yr').innerHTML =
        dt['yr'];
-      document.querySelector('div.ttle div.mnth').innerHTML =
+      document.querySelector('div.ttle span.mnth').innerHTML =
        dt['mnth'];
-      document.querySelector('div.ttle div.dy').innerHTML =
+      document.querySelector('div.ttle span.dy').innerHTML =
        dt['dy'];
 
       if (was_playing) { plyer.play(); }
