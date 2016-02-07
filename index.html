@@ -10,23 +10,22 @@
     font-family: 'Shadows Into Light', cursive;
     /*font-weight: bold;*/
     font-size: 40px;
-    padding: 0.25em;
+    padding: 0.1em;
   }
 
   div.main {
     margin-left: auto;
     margin-right: auto;
-    font-size: 40px;
     width: 88%;
     text-align: center;
   }
 
   div.main div.intro {
-    font-size: 0.5em;
+    font-size: 0.5rem;
   }
 
   div.main div.ttle * {
-    font-size: 1.5em;
+    font-size: 1.5rem;
     /*min-height: 3em;*/
   }
 
@@ -34,23 +33,29 @@
     border: none;
     background: none;
     width: 100%;
-    font-size: 2em;
+    font-size: 2rem;
   }
 
   @media screen and (max-width: 700px) {
-    input { font-size: 1.2em; }
+    input { font-size: 1.2rem; }
   }
 
   @media screen and (max-width: 552px) {
-    div.main div.ttle span { font-size: 0.8em; }
+    div.main div.ttle span { font-size: 0.8rem; }
   }
 
   @media screen and (max-width: 442px) {
-    input { font-size: 0.8em; }
+    input { font-size: 0.8rem; }
   }
 
   @media screen and (max-width: 342px) {
-    div.main div.ttle span { font-size: 0.5em; }
+    div.main div.ttle span { font-size: 0.5rem; }
+    input { font-size: 0.6rem; }
+  }
+
+  @media screen and (max-width: 290px) {
+    div.main div.ttle span { font-size: 0.4rem; }
+    input { font-size: 0.4rem; }
   }
 
   input:focus {
@@ -182,7 +187,7 @@ window.addEventListener('load', function() {
     // plyer was playing audio, just restart it
     if (plyer.src) { 
       document.querySelector('input.ply').value =
-       'Momento, \'momento!';
+       'Momento,\'momento!';
       return plyer.play();
     }
 
