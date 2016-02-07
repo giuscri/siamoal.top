@@ -1794,7 +1794,7 @@ app.get('/', function (req, res) {
     url = [url, 'lazanzara.mp3'].join('-');
     return _res.send({
         timestamp: episode_tmstmps[inx],
-        src: url,
+        src: [url, 't=30:50'].join('#'),
     });
 
     /*
