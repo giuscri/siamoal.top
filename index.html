@@ -5,8 +5,9 @@
 <style>
   * {
     font-family: 'Nothing You Could Do', cursive;
+    font-weight: bold;
     font-size: 40px;
-    /*padding: 0.25em;*/
+    padding: 0.25em;
   }
 
   div.main {
@@ -30,10 +31,23 @@
     border: none;
     background: none;
     width: 100%;
+    font-size: 2em;
   }
 
   input:focus {
     outline: none;
+  }
+
+  div.footer p {
+    font-size: 0.6em;
+  }
+
+  div.footer h1 {
+    font-size: 0.6em;
+  }
+
+  div.footer div.credits {
+    font-size: 0.4em;
   }
 </style>
 </head>
@@ -42,7 +56,7 @@
 
 <div class="main">
   <div class="intro">
-    &quot;La Zanzara e' un bene prezioso.&quot;
+    &quot;La Zanzara e' un bene prezioso&quot;
   </div>
 
   <div class="ttle">
@@ -51,33 +65,35 @@
     <div class="yr"></div>
   </div>
 
-  <input type="button" class="ply" value="&gt; Daje! &lt;" />
+  <div><input type="button" class="ply" value="-&gt; Daje &lt;-" /></div>
 
-  <input type="button" class="rnd" value="Random" />
+  <div><input type="button" class="rnd" value="Random" /></div>
+
+  <p>---</p>
 
   <div class="footer">
+
     <h1>Ma che cazz?!</h1>
 
     <p>
-    Per festeggiare il decennale della Zanzara, abbiamo
-    pensato di raccogliere oltre 1500 puntate dal 2008
-    fino al 2015.
+      Per festeggiare il decennale della Zanzara, abbiamo
+      pensato di raccogliere oltre 1500 puntate dal 2008
+      fino al 2015.
     </p>
 
     <p>
-    Pigia su <em>Daje!</em> per ascoltare una puntata
-    a caso e scoprire la storia della Zanzara.
-    
-    <p>Massacra il bottone <em>Random</em>
-    per far scegliere alle nostre scimmie
-    addestrate un'altra puntata.
+      Massacra il bottone <em>Random</em>
+      per far scegliere alle nostre scimmie
+      addestrate una puntata.
     </p>
 
     <p>
-    Se non sei drogato di Zanzara non capirai, ma
-    se come noi il weekend e le feste sono come
-    <em>quei giorni</em>, beh, amiiiico mio, apprezzerai!
+      Se non sei drogato di Zanzara non capirai, ma
+      se come noi il weekend e le feste sono come
+      <em>quei giorni</em>, beh, amiiiico mio, strafogati!
     </p>
+
+    <div class="credits">Made with love, 2016</div>
   </div>
 </div>
 
@@ -100,7 +116,7 @@ var http = {
 };
 
 var set_nxt = function(cb) {
-  http.get('http://192.168.1.42:3000', function(err, res) {
+  http.get('https://desolate-woodland-39841.herokuapp.com/', function(err, res) {
     if (err) { return cb(err); }
     document.querySelector('audio')
      .setAttribute('src', JSON.parse(res)['src']);
@@ -144,7 +160,7 @@ window.addEventListener('load', function() {
     // plyer is playing audio, just pause it
     if (!plyer.paused) { 
       document.querySelector('input.ply').value =
-       '> Daje! <';
+       '-> Daje! <-';
       return plyer.pause();
     }
 
