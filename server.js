@@ -1794,25 +1794,9 @@ app.get('/', function (req, res) {
     url = [url, 'lazanzara.mp3'].join('-');
     return _res.send({
         timestamp: episode_tmstmps[inx],
-        src: [url, 't=30:50'].join('#'),
+        src: [url, 't=40:50'].join('#'),
         debug: true,
     });
-
-    /*
-    fs.readFile('episodes.timestamp', 'utf-8', function (err, res) {
-        if (err) { return err; }
-        var lns = res.trim().split('\n')
-        var inx = Math.floor(Math.random() * lns.length);
-        var url = base_url;
-        url = [url, lns[inx].split('-')[0]].join('/');
-        url = [url, lns[inx].split('-').join('').slice(2)].join('/');
-        url = [url, 'lazanzara.mp3'].join('-');
-        return _res.send({
-            timestamp: lns[inx],
-            src: url,
-        });
-    });
-    */
 });
 
 app.listen(process.env.PORT || 3000);
