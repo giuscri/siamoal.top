@@ -1,0 +1,8 @@
+{
+  "name": "David",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.4",
+    "mongodb": "^2.1.6"
+  }
+}

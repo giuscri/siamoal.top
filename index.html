@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+<head>
+<link href="https://fonts.googleapis.com/css?family=Nothing+You+Could+Do" rel="stylesheet" type="text/css">
+<style>
+  * {
+    font-family: 'Nothing You Could Do', cursive;
+    font-size: 40px;
+    /*padding: 0.25em;*/
+  }
+
+  div.main {
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 40px;
+    width: 80%;
+    text-align: center;
+  }
+
+  div.main div.intro {
+    font-size: 0.5em;
+  }
+
+  div.main div.ttle {
+    font-size: 1.5em;
+    min-height: 3em;
+  }
+
+  input {
+    border: none;
+    background: none;
+    width: 100%;
+  }
+
+  input:focus {
+    outline: none;
+  }
+</style>
+</head>
+<body>
+<audio>Y not a better browser, bro?</audio>
+
+<div class="main">
+  <div class="intro">
+    &quot;La Zanzara e' un bene prezioso.&quot;
+  </div>
+
+  <div class="ttle">
+    <div class="dy"></div>
+    <div class="mnth"></div>
+    <div class="yr"></div>
+  </div>
+
+  <input type="button" class="ply" value="&gt; Daje! &lt;" />
+
+  <input type="button" class="rnd" value="Random" />
+
+  <div class="footer">
+    <h1>Ma che cazz?!</h1>
+
+    <p>
+    Per festeggiare il decennale della Zanzara, abbiamo
+    pensato di raccogliere oltre 1500 puntate dal 2008
+    fino al 2015.
+    </p>
+
+    <p>
+    Pigia su <em>Daje!</em> per ascoltare una puntata
+    a caso e scoprire la storia della Zanzara.
+    
+    <p>Massacra il bottone <em>Random</em>
+    per far scegliere alle nostre scimmie
+    addestrate un'altra puntata.
+    </p>
+
+    <p>
+    Se non sei drogato di Zanzara non capirai, ma
+    se come noi il weekend e le feste sono come
+    <em>quei giorni</em>, beh, amiiiico mio, apprezzerai!
+    </p>
+  </div>
+</div>
+
+<script type="application/javascript">
+var http = {
+  get: function(url, cb) {
+    if (!cb) { return; }
+    var xhr = new XMLHttpRequest();
+    xhr.addEventListener('readystatechange', function() {
+      if (this.readyState === this.DONE) {
+        return cb(null, this.responseText);
+      }
+    });
+    xhr.addEventListener('error', function(e) {
+      return cb(e);
+    });
+    xhr.open('GET', url);
+    xhr.send();
+  },
+};
+
+var set_nxt = function(cb) {
+  http.get('http://192.168.1.42:3000', function(err, res) {
+    if (err) { return cb(err); }
+    document.querySelector('audio')
+     .setAttribute('src', JSON.parse(res)['src']);
+    return cb(null, JSON.parse(res));
+  });
+};
+
+var fmt_timestamp = function(tmpstmp) {
+  months = {
+    '01': 'Gennaio',
+    '02': 'Febbraio',
+    '03': 'Marzo',
+    '04': 'Aprile',
+    '05': 'Maggio',
+    '06': 'Giugno',
+    '07': 'Luglio',
+    '08': 'Agosto',
+    '09': 'Settembre',
+    '10': 'Ottobre',
+    '11': 'Novembre',
+    '12': 'Dicembre',
+  };
+  lst = tmpstmp.trim().split('-');
+  return {yr: lst[0], mnth: months[lst[1]], dy: lst[2]};
+}
+
+window.addEventListener('load', function() {
+  var plyer = document.querySelector('audio');
+
+  set_nxt(function(err, res) {
+    var dt = fmt_timestamp(res['timestamp']);
+    document.querySelector('div.ttle div.yr').innerHTML =
+     dt['yr'];
+    document.querySelector('div.ttle div.mnth').innerHTML =
+     dt['mnth'];
+    document.querySelector('div.ttle div.dy').innerHTML =
+     dt['dy'];
+  });
+
+  document.querySelector('input.ply').addEventListener('click', function() {
+    // plyer is playing audio, just pause it
+    if (!plyer.paused) { 
+      document.querySelector('input.ply').value =
+       '> Daje! <';
+      return plyer.pause();
+    }
+
+    // plyer was playing audio, just restart it
+    if (plyer.src) { 
+      document.querySelector('input.ply').value =
+       'Momento,\'momento!';
+      return plyer.play();
+    }
+
+    // else, find another episode, then fire it!
+    set_nxt(function(err, res) {
+      var dt = fmt_timestamp(res['timestamp']);
+      document.querySelector('div.ttle div.yr').innerHTML =
+       dt['yr'];
+      document.querySelector('div.ttle div.mnth').innerHTML =
+       dt['mnth'];
+      document.querySelector('div.ttle div.dy').innerHTML =
+       dt['dy'];
+
+      document.querySelector('input.ply').value =
+       'Momento,\'momento!';
+      return plyer.play();
+    });
+  });
+
+  document.querySelector('input.rnd').addEventListener('click', function() {
+    var was_playing = false;
+    if (!plyer.paused) {
+      plyer.pause();
+      was_playing = true;
+    }
+    set_nxt(function(err, res) {
+      var dt = fmt_timestamp(res['timestamp']);
+      document.querySelector('div.ttle div.yr').innerHTML =
+       dt['yr'];
+      document.querySelector('div.ttle div.mnth').innerHTML =
+       dt['mnth'];
+      document.querySelector('div.ttle div.dy').innerHTML =
+       dt['dy'];
+
+      if (was_playing) { plyer.play(); }
+    });
+  });
+});
+</script>
+</body>
+</html>
