@@ -23,6 +23,10 @@
     font-size: 0.5em;
   }
 
+  div.loading {
+    font-size: 1.5em;
+  }
+
   div.main div.ttle * {
     font-size: 1.5em;
   }
@@ -90,7 +94,6 @@
   </div>
 
   <div class="loading">...</div>
-
 
   <div class="ttle" style="display: none;">
     <span class="dy"></span>&nbsp;<span class="mnth"></span>&nbsp;<span class="yr"></span>
@@ -175,18 +178,20 @@ window.addEventListener('load', function() {
   var plyer = document.querySelector('audio');
 
   set_nxt(function(err, res) {
-    document.querySelector('div.loading')
-     .style.display = 'none';
-    document.querySelector('div.ttle')
-     .style.display = 'block';
+    plyer.addEventListener('canplay', function(e) {
+      document.querySelector('div.loading')
+       .style.display = 'none';
+      document.querySelector('div.ttle')
+       .style.display = 'block';
 
-    var dt = fmt_timestamp(res['timestamp']);
-    document.querySelector('div.ttle span.yr').innerHTML =
-     dt['yr'];
-    document.querySelector('div.ttle span.mnth').innerHTML =
-     dt['mnth'];
-    document.querySelector('div.ttle span.dy').innerHTML =
-     dt['dy'];
+      var dt = fmt_timestamp(res['timestamp']);
+      document.querySelector('div.ttle span.yr').innerHTML =
+       dt['yr'];
+      document.querySelector('div.ttle span.mnth').innerHTML =
+       dt['mnth'];
+      document.querySelector('div.ttle span.dy').innerHTML =
+       dt['dy'];
+    });
   });
 
   document.querySelector('input.ply').addEventListener('click', function() {
@@ -204,37 +209,48 @@ window.addEventListener('load', function() {
       return plyer.play();
     }
 
+    /*
     // else, find another episode, then fire it!
     set_nxt(function(err, res) {
-      plyer.play();
-      var dt = fmt_timestamp(res['timestamp']);
-      document.querySelector('div.ttle span.yr').innerHTML =
-       dt['yr'];
-      document.querySelector('div.ttle span.mnth').innerHTML =
-       dt['mnth'];
-      document.querySelector('div.ttle span.dy').innerHTML =
-       dt['dy'];
+      plyer.addEventListener('canplay', function(e) {
+        plyer.play();
+        var dt = fmt_timestamp(res['timestamp']);
+        document.querySelector('div.ttle span.yr').innerHTML =
+         dt['yr'];
+        document.querySelector('div.ttle span.mnth').innerHTML =
+         dt['mnth'];
+        document.querySelector('div.ttle span.dy').innerHTML =
+         dt['dy'];
 
-      document.querySelector('input.ply').value =
-       'Momento,\'momento!';
+        document.querySelector('input.ply').value =
+         'Momento,\'momento!';
+      });
     });
+    */
   });
 
   document.querySelector('input.rnd').addEventListener('click', function() {
+    document.querySelector('div.loading')
+     .style.display = 'block';
+    document.querySelector('div.ttle')
+     .style.display = 'none';
+
     var was_playing = false;
     if (!plyer.paused) {
       plyer.pause();
       was_playing = true;
     }
     set_nxt(function(err, res) {
-      if (was_playing) { plyer.play(); }
-      var dt = fmt_timestamp(res['timestamp']);
-      document.querySelector('div.ttle span.yr').innerHTML =
-       dt['yr'];
-      document.querySelector('div.ttle span.mnth').innerHTML =
-       dt['mnth'];
-      document.querySelector('div.ttle span.dy').innerHTML =
-       dt['dy'];
+      plyer.addEventListener('canplay', function(e) {
+        if (was_playing) { plyer.play(); }
+        var dt = fmt_timestamp(res['timestamp']);
+        document.querySelector('div.ttle span.yr').innerHTML =
+         dt['yr'];
+        document.querySelector('div.ttle span.mnth').innerHTML =
+         dt['mnth'];
+        document.querySelector('div.ttle span.dy').innerHTML =
+         dt['dy'];
+      });
     });
   });
 });
