@@ -44,6 +44,7 @@
 
   @media screen and (max-width: 552px) {
     div.main div.ttle span { font-size: 0.8em; }
+    div.loading { font-size: 0.8em; }
   }
 
   @media screen and (max-width: 442px) {
@@ -52,6 +53,7 @@
 
   @media screen and (max-width: 342px) {
     div.main div.ttle span { font-size: 0.5em; }
+    div.loading { font-size: 0.5em; }
     input { font-size: 0.6em; }
   }
 
@@ -115,7 +117,7 @@
     </p>
 
     <p>
-      Massacra il bottone <em>Random</em>
+      Premi il bottone <em>Random</em>
       per far scegliere alle nostre scimmie
       addestrate una puntata.
     </p>
@@ -208,25 +210,6 @@ window.addEventListener('load', function() {
        'Momento,\'momento!';
       return plyer.play();
     }
-
-    /*
-    // else, find another episode, then fire it!
-    set_nxt(function(err, res) {
-      plyer.addEventListener('canplay', function(e) {
-        plyer.play();
-        var dt = fmt_timestamp(res['timestamp']);
-        document.querySelector('div.ttle span.yr').innerHTML =
-         dt['yr'];
-        document.querySelector('div.ttle span.mnth').innerHTML =
-         dt['mnth'];
-        document.querySelector('div.ttle span.dy').innerHTML =
-         dt['dy'];
-
-        document.querySelector('input.ply').value =
-         'Momento,\'momento!';
-      });
-    });
-    */
   });
 
   document.querySelector('input.rnd').addEventListener('click', function() {
@@ -238,11 +221,12 @@ window.addEventListener('load', function() {
     var was_playing = false;
     if (!plyer.paused) {
       plyer.pause();
+      document.querySelector('input.ply').value =
+       '-> Daje! <-';
       was_playing = true;
     }
     set_nxt(function(err, res) {
       plyer.addEventListener('canplay', function(e) {
-        if (was_playing) { plyer.play(); }
         var dt = fmt_timestamp(res['timestamp']);
         document.querySelector('div.ttle span.yr').innerHTML =
          dt['yr'];
@@ -250,6 +234,11 @@ window.addEventListener('load', function() {
          dt['mnth'];
         document.querySelector('div.ttle span.dy').innerHTML =
          dt['dy'];
+        if (was_playing) {
+          document.querySelector('input.ply').value =
+           'Momento,\'momento!';
+          plyer.play();
+        }
       });
     });
   });
