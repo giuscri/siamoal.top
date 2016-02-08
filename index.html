@@ -206,6 +206,7 @@ window.addEventListener('load', function() {
 
     // else, find another episode, then fire it!
     set_nxt(function(err, res) {
+      plyer.play();
       var dt = fmt_timestamp(res['timestamp']);
       document.querySelector('div.ttle span.yr').innerHTML =
        dt['yr'];
@@ -216,7 +217,6 @@ window.addEventListener('load', function() {
 
       document.querySelector('input.ply').value =
        'Momento,\'momento!';
-      return plyer.play();
     });
   });
 
@@ -227,6 +227,7 @@ window.addEventListener('load', function() {
       was_playing = true;
     }
     set_nxt(function(err, res) {
+      if (was_playing) { plyer.play(); }
       var dt = fmt_timestamp(res['timestamp']);
       document.querySelector('div.ttle span.yr').innerHTML =
        dt['yr'];
@@ -234,8 +235,6 @@ window.addEventListener('load', function() {
        dt['mnth'];
       document.querySelector('div.ttle span.dy').innerHTML =
        dt['dy'];
-
-      if (was_playing) { plyer.play(); }
     });
   });
 });
