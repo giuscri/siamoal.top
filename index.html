@@ -89,7 +89,10 @@
     &quot;La Zanzara e' un bene prezioso&quot;
   </div>
 
-  <div class="ttle">
+  <div class="loading">...</div>
+
+
+  <div class="ttle" style="display: none;">
     <span class="dy"></span>&nbsp;<span class="mnth"></span>&nbsp;<span class="yr"></span>
   </div>
 
@@ -172,6 +175,11 @@ window.addEventListener('load', function() {
   var plyer = document.querySelector('audio');
 
   set_nxt(function(err, res) {
+    document.querySelector('div.loading')
+     .style.display = 'none';
+    document.querySelector('div.ttle')
+     .style.display = 'block';
+
     var dt = fmt_timestamp(res['timestamp']);
     document.querySelector('div.ttle span.yr').innerHTML =
      dt['yr'];
